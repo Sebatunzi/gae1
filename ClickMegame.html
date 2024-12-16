@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Click the Button Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        #game-container {
+            margin: 20px auto;
+            padding: 20px;
+            border: 2px solid #333;
+            border-radius: 10px;
+            width: 300px;
+            background-color: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        #click-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        #click-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .stats {
+            margin: 10px 0;
+            font-size: 18px;
+        }
+
+        #start-btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #28a745;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #start-btn:hover {
+            background-color: #1e7e34;
+        }
+        .game_descript{
+            height: 50px;
+            width: 190px;
+            align-self: center;
+            background: white;
+            margin: 20px auto;
+            padding: 10px;
+            border: 2px solid #333;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Click the Button Game</h1>
+    <div class="game_descript">
+        <p>Testing how fast can click the button</p>
+    </div>
+    <div id="game-container">
+        <div id="time" class="stats">Time Left: 10</div>
+        <div id="score" class="stats">Score: 0</div>
+        <button id="click-btn" disabled>Click Me!</button>
+        <button id="start-btn">Start Game</button>
+    </div>
+
+    <script>
+        const clickBtn = document.getElementById('click-btn');
+        const startBtn = document.getElementById('start-btn');
+        const timeDisplay = document.getElementById('time');
+        const scoreDisplay = document.getElementById('score');
+
+        let timeLeft = 10;
+        let score = 0;
+        let timer;
+
+        // Start game function
+        function startGame() {
+            score = 0;
+            timeLeft = 10;
+            clickBtn.disabled = false;
+            startBtn.disabled = true;
+            updateScore();
+            updateTime();
+
+            timer = setInterval(() => {
+                timeLeft--;
+                updateTime();
+
+                if (timeLeft <= 0) {
+                    endGame();
+                }
+            }, 1000);
+        }
+
+        // End game function
+        function endGame() {
+            clearInterval(timer);
+            clickBtn.disabled = true;
+            startBtn.disabled = false;
+            alert(`Game Over! Your final score is ${score}`);
+        }
+
+        // Update score function
+        function updateScore() {
+            scoreDisplay.textContent = `Score: ${score}`;
+        }
+
+        // Update time function
+        function updateTime() {
+            timeDisplay.textContent = `Time Left: ${timeLeft}`;
+        }
+
+        // Event listeners
+        clickBtn.addEventListener('click', () => {
+            score++;
+            updateScore();
+        });
+
+        startBtn.addEventListener('click', startGame);
+    </script>
+</body>
+</html>
